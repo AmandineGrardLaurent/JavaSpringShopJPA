@@ -14,8 +14,7 @@ public interface ArticleRepository extends JpaRepository<Article,Long>{
     public List<Article> findByBrandAndPrice(String brand, double price);
     public List<Article> findByCategoryId(Long categoryId);
 
-    @Query("SELECT a FROM Article a WHERE a.brand LIKE %:x% AND a.description LIKE %:y%")
-    public List<Article> searchArticles(@Param("x") String brand, @Param("y") String description);
+    public List<Article> findByBrandContainingAndDescriptionContaining(String brand, String description);
 
     public void deleteByPriceLessThan(double price);
 
