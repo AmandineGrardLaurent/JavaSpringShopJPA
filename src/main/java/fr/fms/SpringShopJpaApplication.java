@@ -48,6 +48,8 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 			int userChoice = Helper.displayChoices(scanner);
 			switch (userChoice) {
 				case 1:
+					Helper.displayItems(articleService.getAllArticles(), "Liste de tous les articles : ",
+							"Aucun article trouvé");
 					break;
 				case 2:
 					break;
@@ -85,11 +87,6 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 
 		// System.out.println("Affiche d'un article 1 : ");
 		// System.out.println(articleService.getArticleById(1L));
-
-		// System.out.println("Affichage de tous les articles : ");
-		// for(Article article : articleService.getAllArticles()){
-		// System.out.println(article);
-		// }
 
 		// System.out.println("Affichage de tous les articles de la marque Samsung et
 		// serie S: ");
