@@ -3,6 +3,9 @@ package fr.fms.utils;
 import java.util.List;
 import java.util.Scanner;
 
+import fr.fms.entities.Article;
+import fr.fms.service.ArticleService;
+
 public class Helper {
 
     public class ConsoleColors {
@@ -31,19 +34,19 @@ public class Helper {
     public static int displayChoices(Scanner scanner) {
         System.out.println("[1] Afficher tous les articles sans pagination\n"
                 + "[2] Afficher tous les articles sans pagination\n"
-                + "**********************************"
-                + "\n[3] Ajouter un article\n"
+                + "********************************** \n"
+                + "[3] Ajouter un article\n"
                 + "[4] Afficher un article\n"
                 + "[5] Supprimer un article\n"
                 + "[6] Modifier un article\n"
-                + "**********************************"
-                + "\n[7] Ajouter une catégorie\n"
+                + "********************************** \n"
+                + "[7] Ajouter une catégorie\n"
                 + "[8] Afficher une catégorie\n"
                 + "[9] Supprimer une catégorie\n"
                 + "[10] Mettre à jour une catégorie\n"
                 + "[11] Afficher tous les articles d'une catégorie\n"
-                + "**********************************"
-                + "\n[12] Quitter\n");
+                + "********************************** \n"
+                + "[12] Quitter\n");
 
         // Ask the user for a numeric choice
         return askInt(scanner, "Quel est votre choix ? " + ConsoleColors.RESET);
@@ -59,5 +62,16 @@ public class Helper {
             }
             System.out.println("\n");
         }
+    }
+
+    public static void displayArticleById(Scanner scanner, ArticleService articleService) {
+        Long articleId = Long.valueOf(askInt(scanner, "Quel article souhaitez-vous consulter ?"));
+
+        System.out.printf("Affichage de l'article %d :\n", articleId);
+
+        System.out.println(
+                articleService.getArticleById(articleId)
+                        .map(Object::toString)
+                        .orElse("Article introuvable"));
     }
 }

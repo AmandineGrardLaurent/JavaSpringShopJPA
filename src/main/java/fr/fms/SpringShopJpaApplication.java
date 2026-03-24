@@ -56,6 +56,7 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 				case 3:
 					break;
 				case 4:
+					Helper.displayArticleById(scanner, articleService);
 					break;
 				case 5:
 					break;
@@ -84,9 +85,6 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 		// for(Article article : articleService.getArticleByCategoryId(1L)){
 		// System.out.println(article);
 		// }
-
-		// System.out.println("Affiche d'un article 1 : ");
-		// System.out.println(articleService.getArticleById(1L));
 
 		// System.out.println("Affichage de tous les articles de la marque Samsung et
 		// serie S: ");
