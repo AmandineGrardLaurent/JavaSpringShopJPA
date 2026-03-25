@@ -133,7 +133,7 @@ public class Helper {
      * @param articleService Service pour accéder aux articles
      */
     public static void displayArticleById(Scanner scanner, ArticleService articleService) {
-        Long articleId = Long.valueOf(askInt(scanner, "Quel article souhaitez-vous consulter ?"));
+        Long articleId = askLong(scanner, "Quel article souhaitez-vous consulter ?");
 
         System.out.printf("Affichage de l'article %d :\n", articleId);
 
