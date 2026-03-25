@@ -73,7 +73,7 @@ public class Article implements Serializable {
                 ", brand='" + brand + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
-                ", category=" + category.getName() +
+                ", category=" + (category != null ? category.getName() : "Aucune") +
                 '}';
     }
 }
