@@ -29,13 +29,6 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		// articleRepository.save(new Article(null, "Samsung", "S10", 500, smartphone));
-		// articleRepository.save(new Article(null, "Samsung", "S9", 350, smartphone));
-
-		// articleRepository.save(new Article(null, "Asus", "R510", 600, laptop));
-
-		// articleRepository.save(new Article(null, "Ipad", "Apple", 350, tablet));
-
 		Scanner scanner = new Scanner(System.in);
 		boolean exit = false;
 
@@ -70,6 +63,7 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 					Helper.displayCategoryById(scanner, categoryService);
 					break;
 				case 9:
+					Helper.deleteCategoryById(scanner, categoryService);
 					break;
 				case 10:
 					break;
