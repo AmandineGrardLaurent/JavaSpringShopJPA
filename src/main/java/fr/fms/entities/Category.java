@@ -11,18 +11,17 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Category implements Serializable {
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
 
-
     @OneToMany(mappedBy = "category")
     private Collection<Article> articles;
-    
 
-    public Category(){
+    public Category() {
     }
 
     public Category(String name) {
@@ -44,13 +43,16 @@ public class Category implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-    
+
+    public Collection<Article> getArticles() {
+        return articles;
+    }
+
     @Override
     public String toString() {
         return "Category{" +
-               "id=" + id +
-               ", name=" + name +
-               '}';
+                "id=" + id +
+                ", name=" + name +
+                '}';
     }
 }
-
