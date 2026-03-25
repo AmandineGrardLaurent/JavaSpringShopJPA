@@ -67,6 +67,7 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 					Helper.addCategory(scanner, categoryService);
 					break;
 				case 8:
+					Helper.displayCategoryById(scanner, categoryService);
 					break;
 				case 9:
 					break;

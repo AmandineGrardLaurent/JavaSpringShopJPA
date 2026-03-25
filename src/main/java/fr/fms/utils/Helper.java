@@ -144,6 +144,23 @@ public class Helper {
     }
 
     /**
+     * Affiche une categorie à partir de son id.
+     * 
+     * @param scanner         Scanner utilisé pour la saisie
+     * @param categoryService Service pour accéder aux catégories
+     */
+    public static void displayCategoryById(Scanner scanner, CategoryService categoryService) {
+        Long categoryId = askLong(scanner, "Quelle catégorie souhaitez-vous consulter ? ");
+
+        System.out.printf("Affichage de la catégorie %d : \n", categoryId);
+
+        System.out.println(
+                categoryService.getCategoryById(categoryId)
+                        .map(Object::toString)
+                        .orElse(Helper.ConsoleColors.RED + "Catégorie introuvable \n" + Helper.ConsoleColors.RESET));
+    }
+
+    /**
      * Supprime un article à partir de son id après vérification de son existence.
      * 
      * @param scanner        Scanner utilisé pour la saisie
