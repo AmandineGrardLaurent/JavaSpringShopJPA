@@ -22,4 +22,8 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     public void deleteByPriceLessThan(double price);
 
+    @Modifying
+    @Query("UPDATE article a SET a.category = null WHERE a.category.id = :id")
+    void removeCategoryFromArticles(@Param("id") Long categoryId);
+
 }
