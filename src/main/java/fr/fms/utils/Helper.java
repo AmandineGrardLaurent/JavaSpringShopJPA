@@ -8,8 +8,14 @@ import fr.fms.entities.Category;
 import fr.fms.service.ArticleService;
 import fr.fms.service.CategoryService;
 
+/**
+ * Classe Helper pour gérer les interactions console avec l'utilisateur.
+ */
 public class Helper {
 
+    /**
+     * Classe interne pour gérer les couleurs d'affichage dans la console.
+     */
     public class ConsoleColors {
         public static final String RESET = "\u001B[0m";
         public static final String RED = "\u001B[31m";
@@ -18,27 +24,44 @@ public class Helper {
         public static final String BLUE = "\u001B[34m";
     }
 
+    /**
+     * Récupère l'entier saisit par l'utilisateur, avec validation.
+     * 
+     * @return la saisie de l'utilisateur
+     */
     public static int askInt(Scanner scanner, String message) {
         int number;
         while (true) {
             System.out.println(message);
             if (!scanner.hasNextInt()) {
                 System.out.println(ConsoleColors.RED + "Saisissez un entier." + ConsoleColors.RESET);
+                // on vide le buffer
                 scanner.next();
                 continue;
             }
             number = scanner.nextInt();
+            // on vide le saut de ligne restant
             scanner.nextLine();
             break;
         }
         return number;
     }
 
+    /**
+     * Récupère la chaîne de caractère saisi par l'utilisateur.
+     * 
+     * @return la saisie de l'utilisateur
+     */
     public static String askString(Scanner scanner, String message) {
         System.out.print(message);
         return scanner.nextLine();
     }
 
+    /**
+     * Récupère le nombre décimal saisi par l'utilisateur.
+     * 
+     * @return la saisie de l'utilisateur
+     */
     public static double askDouble(Scanner scanner, String message) {
         System.out.print(message);
         double value = scanner.nextDouble();
@@ -46,6 +69,11 @@ public class Helper {
         return value;
     }
 
+    /**
+     * Récupère le nombre entier (sur 64bits) saisi par l'utilisateur.
+     * 
+     * @return la saisie de l'utilisateur
+     */
     public static Long askLong(Scanner scanner, String message) {
         System.out.print(message);
         Long value = scanner.nextLong();
@@ -53,6 +81,11 @@ public class Helper {
         return value;
     }
 
+    /**
+     * Affiche le menu principal et lit le choix de l'utilisateur.
+     * 
+     * @return le choix saisi par l'utilisateur
+     */
     public static int displayChoices(Scanner scanner) {
         System.out.println("[1] Afficher tous les articles sans pagination\n"
                 + "[2] Afficher tous les articles sans pagination\n"
@@ -70,10 +103,17 @@ public class Helper {
                 + "********************************** \n"
                 + "[12] Quitter\n");
 
-        // Ask the user for a numeric choice
+        // Demande le choix à l'utilisateur
         return askInt(scanner, ConsoleColors.BLUE + "-- Quel est votre choix ? --" + ConsoleColors.RESET);
     }
 
+    /**
+     * Affiche une liste d'objets de manière générique avec un titre.
+     * 
+     * @param items        Liste d'objets à afficher
+     * @param title        Titre de l'affichage
+     * @param errorMessage Message d'erreur si la liste est vide
+     */
     public static <T> void displayItems(List<T> items, String title, String errorMessage) {
         if (items.isEmpty()) {
             System.out.println(ConsoleColors.RED + errorMessage + ConsoleColors.RESET);
@@ -86,6 +126,12 @@ public class Helper {
         }
     }
 
+    /**
+     * Affiche un article à partir de son id.
+     * 
+     * @param scanner        Scanner utilisé pour la saisie
+     * @param articleService Service pour accéder aux articles
+     */
     public static void displayArticleById(Scanner scanner, ArticleService articleService) {
         Long articleId = Long.valueOf(askInt(scanner, "Quel article souhaitez-vous consulter ?"));
 
@@ -97,9 +143,16 @@ public class Helper {
                         .orElse(Helper.ConsoleColors.RED + "Article introuvable \n" + Helper.ConsoleColors.RESET));
     }
 
+    /**
+     * Supprime un article à partir de son id après vérification de son existence.
+     * 
+     * @param scanner        Scanner utilisé pour la saisie
+     * @param articleService Service pour accéder aux articles
+     */
     public static void deleteArticleById(Scanner scanner, ArticleService articleService) {
         Long articleId = askLong(scanner, "Quel article (id) voulez-vous supprimer ? ");
 
+        // Vérifie si l'article existe
         while (!articleService.articleExists(articleId)) {
             System.out.println(Helper.ConsoleColors.RED + "Article inexistant !" + Helper.ConsoleColors.RESET);
             articleId = askLong(scanner, "Quel article (id) voulez-vous supprimer ? ");
@@ -112,12 +165,21 @@ public class Helper {
 
     }
 
+    /**
+     * Ajoute un nouvel article via la console.
+     * Vérifie que la catégorie existe avant de créer l'article.
+     * 
+     * @param scanner         Scanner utilisé pour la saisie
+     * @param articleService  Service pour gérer les articles
+     * @param categoryService Service pour gérer les catégories
+     */
     public static void addArticle(Scanner scanner, ArticleService articleService, CategoryService categoryService) {
         String brand = askString(scanner, "La marque : ");
         String description = askString(scanner, "La description : ");
         double price = askDouble(scanner, "Le prix : ");
         Long categoryId = askLong(scanner, "L'id de la catégorie : ");
 
+        // Vérifie que la catégorie existe
         while (!categoryService.categoryExists(categoryId)) {
             System.out.println(Helper.ConsoleColors.RED + "Categorie inexistante !" + Helper.ConsoleColors.RESET);
             categoryId = askLong(scanner, "L'id de la catégorie : ");
@@ -129,9 +191,17 @@ public class Helper {
         System.out.println(Helper.ConsoleColors.GREEN + "Article créé avec succès !" + Helper.ConsoleColors.RESET);
     }
 
+    /**
+     * Ajoute une nouvelle catégorie via la console.
+     * Vérifie que le nom de la catégorie n'existe pas déjà.
+     * 
+     * @param scanner         Scanner utilisé pour la saisie
+     * @param categoryService Service pour gérer les catégories
+     */
     public static void addCategory(Scanner scanner, CategoryService categoryService) {
         String categoryName = askString(scanner, "Nom de la catégorie : ");
 
+        // Vérifie que la catégorie n'existe pas déjà
         while (categoryService.categoryExistsByName(categoryName)) {
             System.out.println(Helper.ConsoleColors.RED + "Categorie déjà existante !" + Helper.ConsoleColors.RESET);
             categoryName = askString(scanner, "Nom de la catégorie : ");
