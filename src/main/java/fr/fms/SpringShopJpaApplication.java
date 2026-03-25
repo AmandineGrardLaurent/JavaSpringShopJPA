@@ -28,9 +28,6 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		// Category smartphone = categoryRepository.save(new Category("Smartphone"));
-		// Category tablet = categoryRepository.save(new Category("Tablet"));
-		// Category laptop = categoryRepository.save(new Category("Laptop"));
 
 		// articleRepository.save(new Article(null, "Samsung", "S10", 500, smartphone));
 		// articleRepository.save(new Article(null, "Samsung", "S9", 350, smartphone));
@@ -67,6 +64,7 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 				case 6:
 					break;
 				case 7:
+					Helper.addCategory(scanner, categoryService);
 					break;
 				case 8:
 					break;
