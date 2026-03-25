@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fr.fms.dao.ArticleRepository;
 import fr.fms.entities.Article;
+import fr.fms.entities.Category;
 
 import java.util.List;
 import java.util.Optional;
@@ -63,6 +64,12 @@ public class ArticleService {
             article.setDescription(description);
             articleRepository.save(article);
         });
+    }
+
+    @Transactional
+    public Article createArticle(String brand, String description, double price, Category category) {
+        Article article = new Article(null, brand, description, price, category);
+        return articleRepository.save(article);
     }
 
 }
