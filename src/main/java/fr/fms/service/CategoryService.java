@@ -2,18 +2,24 @@ package fr.fms.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import fr.fms.dao.ArticleRepository;
 import fr.fms.dao.CategoryRepository;
+import fr.fms.entities.Article;
 import fr.fms.entities.Category;
 
 @Service
 public class CategoryService {
     private final CategoryRepository categoryRepository;
+    private final ArticleRepository articleRepository;
 
-    public CategoryService(CategoryRepository categoryRepository) {
+    public CategoryService(CategoryRepository categoryRepository, ArticleRepository articleRepository) {
         this.categoryRepository = categoryRepository;
+        this.articleRepository = articleRepository;
     }
 
     public List<Category> getAllCategoryByOrderByNameAsc() {
@@ -28,6 +34,12 @@ public class CategoryService {
         return categoryRepository.findById(categoryId);
     }
 
+    public Collection<Article> getArticlesByCategoryId(Long categoryId) {
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new RuntimeException("Catégorie introuvable"));
+        return category.getArticles();
+    }
+
     public boolean categoryExists(Long categoryId) {
         return categoryRepository.existsById(categoryId);
     }
@@ -40,5 +52,11 @@ public class CategoryService {
     public Category createCategory(String name) {
         Category category = new Category(name);
         return categoryRepository.save(category);
+    }
+
+    @Transactional
+    public void deleteCategory(Long categoryId) {
+        articleRepository.removeCategoryFromArticles(categoryId);
+        categoryRepository.deleteById(categoryId);
     }
 }
