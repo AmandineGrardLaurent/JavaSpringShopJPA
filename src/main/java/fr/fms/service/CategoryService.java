@@ -2,6 +2,7 @@ package fr.fms.service;
 
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 import fr.fms.dao.CategoryRepository;
 import fr.fms.entities.Category;
@@ -21,4 +22,13 @@ public class CategoryService {
     public List<Category> getAllCategoryByOrderByNameDesc() {
         return categoryRepository.findAllByOrderByNameDesc();
     }
+
+    public Optional<Category> getCategoryById(Long categoryId) {
+        return categoryRepository.findById(categoryId);
+    }
+
+    public boolean categoryExists(Long categoryId) {
+        return categoryRepository.existsById(categoryId);
+    }
+
 }
