@@ -127,6 +127,18 @@ public class Helper {
         articleService.createArticle(brand, description, price, category);
 
         System.out.println(Helper.ConsoleColors.GREEN + "Article créé avec succès !" + Helper.ConsoleColors.RESET);
+    }
 
+    public static void addCategory(Scanner scanner, CategoryService categoryService) {
+        String categoryName = askString(scanner, "Nom de la catégorie : ");
+
+        while (categoryService.categoryExistsByName(categoryName)) {
+            System.out.println(Helper.ConsoleColors.RED + "Categorie déjà existante !" + Helper.ConsoleColors.RESET);
+            categoryName = askString(scanner, "Nom de la catégorie : ");
+        }
+
+        categoryService.createCategory(categoryName);
+        System.out
+                .println(Helper.ConsoleColors.GREEN + "Catégorie créée avec succès !" + Helper.ConsoleColors.RESET);
     }
 }
