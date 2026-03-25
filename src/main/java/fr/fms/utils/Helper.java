@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Scanner;
 
 import fr.fms.entities.Article;
+import fr.fms.entities.Category;
 import fr.fms.service.ArticleService;
+import fr.fms.service.CategoryService;
 
 public class Helper {
 
@@ -26,9 +28,29 @@ public class Helper {
                 continue;
             }
             number = scanner.nextInt();
+            scanner.nextLine();
             break;
         }
         return number;
+    }
+
+    public static String askString(Scanner scanner, String message) {
+        System.out.print(message);
+        return scanner.nextLine();
+    }
+
+    public static double askDouble(Scanner scanner, String message) {
+        System.out.print(message);
+        double value = scanner.nextDouble();
+        scanner.nextLine();
+        return value;
+    }
+
+    public static Long askLong(Scanner scanner, String message) {
+        System.out.print(message);
+        Long value = scanner.nextLong();
+        scanner.nextLine();
+        return value;
     }
 
     public static int displayChoices(Scanner scanner) {
@@ -87,5 +109,23 @@ public class Helper {
                     Helper.ConsoleColors.RED + "Article %d introuvable\n" + Helper.ConsoleColors.RESET,
                     articleId);
         }
+    }
+
+    public static void addArticle(Scanner scanner, ArticleService articleService, CategoryService categoryService) {
+        String brand = askString(scanner, "La marque :");
+        String description = askString(scanner, "La description : ");
+        double price = askDouble(scanner, "Le prix : ");
+        Long categoryId = askLong(scanner, "L'id de la catégorie : ");
+
+        while (!categoryService.categoryExists(categoryId)) {
+            System.out.println(Helper.ConsoleColors.RED + "Categorie inexistante !" + Helper.ConsoleColors.RESET);
+            categoryId = askLong(scanner, "L'id de la catégorie : ");
+        }
+
+        Category category = categoryService.getCategoryById(categoryId).get();
+        articleService.createArticle(brand, description, price, category);
+
+        System.out.println(Helper.ConsoleColors.GREEN + "Article créé avec succès !" + Helper.ConsoleColors.RESET);
+
     }
 }
