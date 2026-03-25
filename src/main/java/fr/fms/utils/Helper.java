@@ -98,21 +98,22 @@ public class Helper {
     }
 
     public static void deleteArticleById(Scanner scanner, ArticleService articleService) {
-        Long articleId = Long.valueOf(askInt(scanner, "Quel article voulez-vous supprimer ?"));
-        if (articleService.getArticleById(articleId).isPresent()) {
-            articleService.deleteArticle(articleId);
-            System.out.printf(
-                    Helper.ConsoleColors.GREEN + "Article %d supprimé avec succès\n" + Helper.ConsoleColors.RESET,
-                    articleId);
-        } else {
-            System.out.printf(
-                    Helper.ConsoleColors.RED + "Article %d introuvable\n" + Helper.ConsoleColors.RESET,
-                    articleId);
+        Long articleId = askLong(scanner, "Quel article (id) voulez-vous supprimer ? ");
+
+        while (!articleService.articleExists(articleId)) {
+            System.out.println(Helper.ConsoleColors.RED + "Article inexistant !" + Helper.ConsoleColors.RESET);
+            articleId = askLong(scanner, "Quel article (id) voulez-vous supprimer ? ");
         }
+
+        articleService.deleteArticle(articleId);
+        System.out.printf(
+                Helper.ConsoleColors.GREEN + "Article %d supprimé avec succès \n" + Helper.ConsoleColors.RESET,
+                articleId);
+
     }
 
     public static void addArticle(Scanner scanner, ArticleService articleService, CategoryService categoryService) {
-        String brand = askString(scanner, "La marque :");
+        String brand = askString(scanner, "La marque : ");
         String description = askString(scanner, "La description : ");
         double price = askDouble(scanner, "Le prix : ");
         Long categoryId = askLong(scanner, "L'id de la catégorie : ");

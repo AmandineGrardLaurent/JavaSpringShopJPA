@@ -35,6 +35,10 @@ public class ArticleService {
         return articleRepository.findByBrandContainingAndDescriptionContaining(brand, description);
     }
 
+    public boolean articleExists(Long articleId) {
+        return articleRepository.existsById(articleId);
+    }
+
     @Transactional
     public Article saveArticle(Article article) {
         return articleRepository.save(article);
