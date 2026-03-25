@@ -32,24 +32,26 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 		// Category tablet = categoryRepository.save(new Category("Tablet"));
 		// Category laptop = categoryRepository.save(new Category("Laptop"));
 
-		// articleRepository.save(new Article(null,"Samsung", "S10", 500, smartphone));
-		// articleRepository.save(new Article(null,"Samsung", "S9", 350, smartphone));
+		// articleRepository.save(new Article(null, "Samsung", "S10", 500, smartphone));
+		// articleRepository.save(new Article(null, "Samsung", "S9", 350, smartphone));
 
-		// articleRepository.save(new Article(null,"Asus", "R510", 600, laptop));
+		// articleRepository.save(new Article(null, "Asus", "R510", 600, laptop));
 
-		// articleRepository.save(new Article(null,"Ipad", "Apple", 350, tablet));
+		// articleRepository.save(new Article(null, "Ipad", "Apple", 350, tablet));
 
 		Scanner scanner = new Scanner(System.in);
 		boolean exit = false;
 
-		System.out.println("Bienvenue dans notre application de gestion d'articles");
+		System.out
+				.println(Helper.ConsoleColors.GREEN + "-- Bienvenue dans notre application de gestion d'articles -- \n"
+						+ Helper.ConsoleColors.RESET);
 
 		while (!exit) {
 			int userChoice = Helper.displayChoices(scanner);
 			switch (userChoice) {
 				case 1:
 					Helper.displayItems(articleService.getAllArticles(), "Liste de tous les articles : ",
-							"Aucun article trouvé");
+							Helper.ConsoleColors.RED + "Aucun article trouvé" + Helper.ConsoleColors.GREEN);
 					break;
 				case 2:
 					break;
@@ -59,6 +61,7 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 					Helper.displayArticleById(scanner, articleService);
 					break;
 				case 5:
+					Helper.deleteArticleById(scanner, articleService);
 					break;
 				case 6:
 					break;
@@ -73,7 +76,7 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 				case 11:
 					break;
 				case 12:
-					System.out.println("Bonne journée et à bientôt");
+					System.out.println("Bonne journée et à bientôt.");
 					exit = true;
 					break;
 				default:
@@ -93,9 +96,6 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 		// "S")){
 		// System.out.println(article);
 		// }
-
-		// // System.out.println("Suppression de l'id 3");
-		// // articleService.deleteArticle(3L);
 
 		// System.out.println("Modification du prix de l'article 1 : 350 -> 300");
 		// articleService.updatePrice(1L, 300);

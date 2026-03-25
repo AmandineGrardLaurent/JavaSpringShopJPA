@@ -49,7 +49,7 @@ public class Helper {
                 + "[12] Quitter\n");
 
         // Ask the user for a numeric choice
-        return askInt(scanner, "Quel est votre choix ? " + ConsoleColors.RESET);
+        return askInt(scanner, ConsoleColors.BLUE + "-- Quel est votre choix ? --" + ConsoleColors.RESET);
     }
 
     public static <T> void displayItems(List<T> items, String title, String errorMessage) {
@@ -72,6 +72,20 @@ public class Helper {
         System.out.println(
                 articleService.getArticleById(articleId)
                         .map(Object::toString)
-                        .orElse("Article introuvable"));
+                        .orElse(Helper.ConsoleColors.RED + "Article introuvable \n" + Helper.ConsoleColors.RESET));
+    }
+
+    public static void deleteArticleById(Scanner scanner, ArticleService articleService) {
+        Long articleId = Long.valueOf(askInt(scanner, "Quel article voulez-vous supprimer ?"));
+        if (articleService.getArticleById(articleId).isPresent()) {
+            articleService.deleteArticle(articleId);
+            System.out.printf(
+                    Helper.ConsoleColors.GREEN + "Article %d supprimé avec succès\n" + Helper.ConsoleColors.RESET,
+                    articleId);
+        } else {
+            System.out.printf(
+                    Helper.ConsoleColors.RED + "Article %d introuvable\n" + Helper.ConsoleColors.RESET,
+                    articleId);
+        }
     }
 }
