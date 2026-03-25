@@ -68,6 +68,7 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 				case 10:
 					break;
 				case 11:
+					Helper.displayArticlesByCategoryId(scanner, categoryService);
 					break;
 				case 12:
 					System.out.println("Bonne journée et à bientôt.");
