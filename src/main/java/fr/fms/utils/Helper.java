@@ -183,6 +183,29 @@ public class Helper {
     }
 
     /**
+     * Supprime une catégorie à partir de son id après vérification de son
+     * existence.
+     * 
+     * @param scanner         Scanner utilisé pour la saisie
+     * @param categoryService Service pour accéder aux catégories
+     */
+    public static void deleteCategoryById(Scanner scanner, CategoryService categoryService) {
+        Long categoryId = askLong(scanner, "Quelle catégorie (id) voulez-vous supprimer ? ");
+
+        // Vérifie si la catégorie existe
+        while (!categoryService.categoryExists(categoryId)) {
+            System.out.println(Helper.ConsoleColors.RED + "Catégorie inexistante !" + Helper.ConsoleColors.RESET);
+            categoryId = askLong(scanner, "Quelle catégorie (id) voulez-vous supprimer ? ");
+        }
+
+        categoryService.deleteCategory(categoryId);
+        System.out.printf(
+                Helper.ConsoleColors.GREEN + "Catégorie %d supprimé avec succès \n" + Helper.ConsoleColors.RESET,
+                categoryId);
+
+    }
+
+    /**
      * Ajoute un nouvel article via la console.
      * Vérifie que la catégorie existe avant de créer l'article.
      * 
