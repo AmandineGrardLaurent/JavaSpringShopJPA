@@ -1,5 +1,6 @@
 package fr.fms.utils;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
 
@@ -250,5 +251,19 @@ public class Helper {
         categoryService.createCategory(categoryName);
         System.out
                 .println(Helper.ConsoleColors.GREEN + "Catégorie créée avec succès !" + Helper.ConsoleColors.RESET);
+    }
+
+    public static void displayArticlesByCategoryId(Scanner scanner, CategoryService categoryService) {
+        Long categoryId = askLong(scanner, "Quelle catégorie souhaitez-vous consulter ? ");
+        Collection<Article> articles = categoryService.getArticlesByCategoryId(categoryId);
+        System.out.println(articles);
+        if (articles.isEmpty()) {
+            System.out.println(ConsoleColors.RED + "Aucun article dans cette catégorie." + ConsoleColors.RESET);
+        } else {
+            System.out.println(ConsoleColors.BLUE + "Articles de la catégorie : \n" + ConsoleColors.RESET);
+            for (Article article : articles) {
+                System.out.println(article);
+            }
+        }
     }
 }
