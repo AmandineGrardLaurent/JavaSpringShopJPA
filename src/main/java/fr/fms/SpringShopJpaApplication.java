@@ -13,6 +13,7 @@ import fr.fms.service.ArticleService;
 import fr.fms.service.CategoryService;
 import fr.fms.utils.Helper;
 import fr.fms.utils.console.ConsoleColors;
+import fr.fms.controller.ArticleConsoleController;
 import fr.fms.entities.Article;
 
 @SpringBootApplication
@@ -48,13 +49,13 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 					Helper.displayArticlesByPage(scanner, articleService);
 					break;
 				case 3:
-					Helper.addArticle(scanner, articleService, categoryService);
+					ArticleConsoleController.addArticle(scanner, articleService, categoryService);
 					break;
 				case 4:
 					Helper.displayArticleById(scanner, articleService);
 					break;
 				case 5:
-					Helper.deleteArticleById(scanner, articleService);
+					ArticleConsoleController.deleteArticleById(scanner, articleService);
 					break;
 				case 6:
 					break;
