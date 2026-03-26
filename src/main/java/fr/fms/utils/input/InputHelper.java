@@ -56,9 +56,22 @@ public class InputHelper {
      * @return la saisie de l'utilisateur
      */
     public static Long askLong(Scanner scanner, String message) {
-        System.out.print(message);
-        Long value = scanner.nextLong();
-        scanner.nextLine();
-        return value;
+        Long number;
+
+        while (true) {
+            System.out.println(message);
+            if (!scanner.hasNextLong()) {
+                System.out.println(ConsoleColors.RED + "Saisissez un entier." + ConsoleColors.RESET);
+                // on vide le buffer
+                scanner.next();
+                continue;
+            }
+            number = scanner.nextLong();
+            // on vide le saut de ligne restant
+            scanner.nextLine();
+            break;
+        }
+        return number;
+
     }
 }
