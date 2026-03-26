@@ -34,12 +34,6 @@ public class CategoryService {
         return categoryRepository.findById(categoryId);
     }
 
-    public Collection<Article> getArticlesByCategoryId(Long categoryId) {
-        Category category = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new RuntimeException("Catégorie introuvable"));
-        return category.getArticles();
-    }
-
     public boolean categoryExists(Long categoryId) {
         return categoryRepository.existsById(categoryId);
     }
