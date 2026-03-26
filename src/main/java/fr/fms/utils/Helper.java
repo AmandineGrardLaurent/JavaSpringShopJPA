@@ -32,8 +32,9 @@ public class Helper {
                 + "[9] Supprimer une catégorie\n"
                 + "[10] Mettre à jour une catégorie\n"
                 + "[11] Afficher tous les articles d'une catégorie\n"
+                + "[12] Afficher toutes les catégories\n"
                 + "********************************** \n"
-                + "[12] Quitter\n");
+                + "[13] Quitter\n");
 
         // Demande le choix à l'utilisateur
         return InputHelper.askInt(scanner, ConsoleColors.BLUE + "-- Quel est votre choix ? --" + ConsoleColors.RESET);
