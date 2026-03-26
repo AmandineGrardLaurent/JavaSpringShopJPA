@@ -1,7 +1,9 @@
 package fr.fms.controller;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.Scanner;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 
@@ -160,5 +162,59 @@ public class ArticleConsoleController {
         articleService.createArticle(brand, description, price, category);
 
         System.out.println(ConsoleColors.GREEN + "Article créé avec succès !" + ConsoleColors.RESET);
+    }
+
+    public static void updateArticle(Scanner scanner, ArticleService articleService,
+            CategoryService categoryService) {
+
+        Long articleId = InputHelper.askLong(scanner, "Quel article (id) voulez-vous modifier ? \n");
+
+        Optional<Article> optionalArticle = articleService.getArticleById(articleId);
+
+        if (!optionalArticle.isPresent()) {
+            System.out.println(ConsoleColors.RED + "Article introuvable !" + ConsoleColors.RESET);
+            return;
+        }
+
+        Article article = optionalArticle.get();
+
+        String brandInput = InputHelper.askString(scanner, "Nouvelle marque (vide pour ignorer) : ");
+        if (!brandInput.isEmpty())
+            article.setBrand(brandInput);
+
+        String descriptionInput = InputHelper.askString(scanner, "Nouvelle description (vide pour ignorer) : ");
+        if (!descriptionInput.isEmpty())
+            article.setDescription(descriptionInput);
+
+        String priceInput = InputHelper.askString(scanner, "Nouveau prix (vide pour ignorer) : ");
+        if (!priceInput.isEmpty()) {
+            try {
+                double price = Double.parseDouble(priceInput);
+                article.setPrice(price);
+            } catch (NumberFormatException e) {
+                System.out.println(ConsoleColors.RED + "Prix invalide !" + ConsoleColors.RESET);
+            }
+        }
+
+        String categoryInput = InputHelper.askString(scanner, "Nouvelle catégorie (id, vide pour ignorer) : ");
+        if (!categoryInput.isEmpty()) {
+            try {
+                Long categoryId = Long.parseLong(categoryInput);
+
+                while (!categoryService.categoryExists(categoryId)) {
+                    System.out.println(ConsoleColors.RED + "Catégorie inexistante !" + ConsoleColors.RESET);
+                    categoryId = InputHelper.askLong(scanner, "Nouvelle catégorie (id, vide pour ignorer) : ");
+
+                }
+                Category category = categoryService.getCategoryById(categoryId).get();
+                article.setCategory(category);
+
+            } catch (NumberFormatException e) {
+                System.out.println(ConsoleColors.RED + "Id de la catégorie invalide !" + ConsoleColors.RESET);
+            }
+        }
+        articleService.saveArticle(article);
+
+        System.out.println(ConsoleColors.GREEN + "Article mis à jour !" + ConsoleColors.RESET);
     }
 }

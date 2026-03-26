@@ -59,6 +59,7 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 					ArticleConsoleController.deleteArticleById(scanner, articleService);
 					break;
 				case 6:
+					ArticleConsoleController.updateArticle(scanner, articleService, categoryService);
 					break;
 				case 7:
 					CategoryConsoleController.addCategory(scanner, categoryService);
