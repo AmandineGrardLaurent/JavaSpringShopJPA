@@ -12,6 +12,7 @@ import fr.fms.entities.Category;
 import fr.fms.service.ArticleService;
 import fr.fms.service.CategoryService;
 import fr.fms.utils.Helper;
+import fr.fms.utils.console.ConsoleColors;
 import fr.fms.entities.Article;
 
 @SpringBootApplication
@@ -33,15 +34,15 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 		boolean exit = false;
 
 		System.out
-				.println(Helper.ConsoleColors.GREEN + "-- Bienvenue dans notre application de gestion d'articles -- \n"
-						+ Helper.ConsoleColors.RESET);
+				.println(ConsoleColors.GREEN + "-- Bienvenue dans notre application de gestion d'articles -- \n"
+						+ ConsoleColors.RESET);
 
 		while (!exit) {
 			int userChoice = Helper.displayChoices(scanner);
 			switch (userChoice) {
 				case 1:
 					Helper.displayItems(articleService.getAllArticles(), "Liste de tous les articles : ",
-							Helper.ConsoleColors.RED + "Aucun article trouvé" + Helper.ConsoleColors.GREEN);
+							ConsoleColors.RED + "Aucun article trouvé" + ConsoleColors.GREEN);
 					break;
 				case 2:
 					Helper.displayArticlesByPage(scanner, articleService);

@@ -11,78 +11,13 @@ import fr.fms.entities.Category;
 import fr.fms.service.ArticleService;
 import fr.fms.service.CategoryService;
 
+import fr.fms.utils.console.ConsoleColors;
+import fr.fms.utils.input.InputHelper;
+
 /**
  * Classe Helper pour gérer les interactions console avec l'utilisateur.
  */
 public class Helper {
-
-    /**
-     * Classe interne pour gérer les couleurs d'affichage dans la console.
-     */
-    public class ConsoleColors {
-        public static final String RESET = "\u001B[0m";
-        public static final String RED = "\u001B[31m";
-        public static final String GREEN = "\u001B[32m";
-        public static final String YELLOW = "\u001B[33m";
-        public static final String BLUE = "\u001B[34m";
-    }
-
-    /**
-     * Récupère l'entier saisit par l'utilisateur, avec validation.
-     * 
-     * @return la saisie de l'utilisateur
-     */
-    public static int askInt(Scanner scanner, String message) {
-        int number;
-        while (true) {
-            System.out.println(message);
-            if (!scanner.hasNextInt()) {
-                System.out.println(ConsoleColors.RED + "Saisissez un entier." + ConsoleColors.RESET);
-                // on vide le buffer
-                scanner.next();
-                continue;
-            }
-            number = scanner.nextInt();
-            // on vide le saut de ligne restant
-            scanner.nextLine();
-            break;
-        }
-        return number;
-    }
-
-    /**
-     * Récupère la chaîne de caractère saisi par l'utilisateur.
-     * 
-     * @return la saisie de l'utilisateur
-     */
-    public static String askString(Scanner scanner, String message) {
-        System.out.print(message);
-        return scanner.nextLine();
-    }
-
-    /**
-     * Récupère le nombre décimal saisi par l'utilisateur.
-     * 
-     * @return la saisie de l'utilisateur
-     */
-    public static double askDouble(Scanner scanner, String message) {
-        System.out.print(message);
-        double value = scanner.nextDouble();
-        scanner.nextLine();
-        return value;
-    }
-
-    /**
-     * Récupère le nombre entier (sur 64bits) saisi par l'utilisateur.
-     * 
-     * @return la saisie de l'utilisateur
-     */
-    public static Long askLong(Scanner scanner, String message) {
-        System.out.print(message);
-        Long value = scanner.nextLong();
-        scanner.nextLine();
-        return value;
-    }
 
     /**
      * Affiche le menu principal et lit le choix de l'utilisateur.
@@ -107,7 +42,7 @@ public class Helper {
                 + "[12] Quitter\n");
 
         // Demande le choix à l'utilisateur
-        return askInt(scanner, ConsoleColors.BLUE + "-- Quel est votre choix ? --" + ConsoleColors.RESET);
+        return InputHelper.askInt(scanner, ConsoleColors.BLUE + "-- Quel est votre choix ? --" + ConsoleColors.RESET);
     }
 
     /**
@@ -186,7 +121,7 @@ public class Helper {
                             + "\n [2] page suivante"
                             + "\n [3] pagination"
                             + "\n [4] quitter \n" + ConsoleColors.RESET);
-            int choice = askInt(scanner, "Faîtes votre choix : ");
+            int choice = InputHelper.askInt(scanner, "Faîtes votre choix : ");
 
             switch (choice) {
                 case 1:
@@ -206,7 +141,7 @@ public class Helper {
                     }
                     break;
                 case 3:
-                    size = askInt(scanner, "Combien d'articles par page ? ");
+                    size = InputHelper.askInt(scanner, "Combien d'articles par page ? ");
                     page = 0;
                     break;
                 case 4:
@@ -227,14 +162,14 @@ public class Helper {
      * @param articleService Service pour accéder aux articles
      */
     public static void displayArticleById(Scanner scanner, ArticleService articleService) {
-        Long articleId = askLong(scanner, "Quel article souhaitez-vous consulter ?");
+        Long articleId = InputHelper.askLong(scanner, "Quel article souhaitez-vous consulter ?");
 
         System.out.printf("Affichage de l'article %d :\n", articleId);
 
         System.out.println(
                 articleService.getArticleById(articleId)
                         .map(Object::toString)
-                        .orElse(Helper.ConsoleColors.RED + "Article introuvable \n" + Helper.ConsoleColors.RESET));
+                        .orElse(ConsoleColors.RED + "Article introuvable \n" + ConsoleColors.RESET));
     }
 
     /**
@@ -244,14 +179,14 @@ public class Helper {
      * @param categoryService Service pour accéder aux catégories
      */
     public static void displayCategoryById(Scanner scanner, CategoryService categoryService) {
-        Long categoryId = askLong(scanner, "Quelle catégorie souhaitez-vous consulter ? ");
+        Long categoryId = InputHelper.askLong(scanner, "Quelle catégorie souhaitez-vous consulter ? ");
 
         System.out.printf("Affichage de la catégorie %d : \n", categoryId);
 
         System.out.println(
                 categoryService.getCategoryById(categoryId)
                         .map(Object::toString)
-                        .orElse(Helper.ConsoleColors.RED + "Catégorie introuvable \n" + Helper.ConsoleColors.RESET));
+                        .orElse(ConsoleColors.RED + "Catégorie introuvable \n" + ConsoleColors.RESET));
     }
 
     /**
@@ -261,17 +196,17 @@ public class Helper {
      * @param articleService Service pour accéder aux articles
      */
     public static void deleteArticleById(Scanner scanner, ArticleService articleService) {
-        Long articleId = askLong(scanner, "Quel article (id) voulez-vous supprimer ? ");
+        Long articleId = InputHelper.askLong(scanner, "Quel article (id) voulez-vous supprimer ? ");
 
         // Vérifie si l'article existe
         while (!articleService.articleExists(articleId)) {
-            System.out.println(Helper.ConsoleColors.RED + "Article inexistant !" + Helper.ConsoleColors.RESET);
-            articleId = askLong(scanner, "Quel article (id) voulez-vous supprimer ? ");
+            System.out.println(ConsoleColors.RED + "Article inexistant !" + ConsoleColors.RESET);
+            articleId = InputHelper.askLong(scanner, "Quel article (id) voulez-vous supprimer ? ");
         }
 
         articleService.deleteArticle(articleId);
         System.out.printf(
-                Helper.ConsoleColors.GREEN + "Article %d supprimé avec succès \n" + Helper.ConsoleColors.RESET,
+                ConsoleColors.GREEN + "Article %d supprimé avec succès \n" + ConsoleColors.RESET,
                 articleId);
 
     }
@@ -284,17 +219,17 @@ public class Helper {
      * @param categoryService Service pour accéder aux catégories
      */
     public static void deleteCategoryById(Scanner scanner, CategoryService categoryService) {
-        Long categoryId = askLong(scanner, "Quelle catégorie (id) voulez-vous supprimer ? ");
+        Long categoryId = InputHelper.askLong(scanner, "Quelle catégorie (id) voulez-vous supprimer ? ");
 
         // Vérifie si la catégorie existe
         while (!categoryService.categoryExists(categoryId)) {
-            System.out.println(Helper.ConsoleColors.RED + "Catégorie inexistante !" + Helper.ConsoleColors.RESET);
-            categoryId = askLong(scanner, "Quelle catégorie (id) voulez-vous supprimer ? ");
+            System.out.println(ConsoleColors.RED + "Catégorie inexistante !" + ConsoleColors.RESET);
+            categoryId = InputHelper.askLong(scanner, "Quelle catégorie (id) voulez-vous supprimer ? ");
         }
 
         categoryService.deleteCategory(categoryId);
         System.out.printf(
-                Helper.ConsoleColors.GREEN + "Catégorie %d supprimé avec succès \n" + Helper.ConsoleColors.RESET,
+                ConsoleColors.GREEN + "Catégorie %d supprimé avec succès \n" + ConsoleColors.RESET,
                 categoryId);
 
     }
@@ -308,21 +243,21 @@ public class Helper {
      * @param categoryService Service pour gérer les catégories
      */
     public static void addArticle(Scanner scanner, ArticleService articleService, CategoryService categoryService) {
-        String brand = askString(scanner, "La marque : ");
-        String description = askString(scanner, "La description : ");
-        double price = askDouble(scanner, "Le prix : ");
-        Long categoryId = askLong(scanner, "L'id de la catégorie : ");
+        String brand = InputHelper.askString(scanner, "La marque : ");
+        String description = InputHelper.askString(scanner, "La description : ");
+        double price = InputHelper.askDouble(scanner, "Le prix : ");
+        Long categoryId = InputHelper.askLong(scanner, "L'id de la catégorie : ");
 
         // Vérifie que la catégorie existe
         while (!categoryService.categoryExists(categoryId)) {
-            System.out.println(Helper.ConsoleColors.RED + "Categorie inexistante !" + Helper.ConsoleColors.RESET);
-            categoryId = askLong(scanner, "L'id de la catégorie : ");
+            System.out.println(ConsoleColors.RED + "Categorie inexistante !" + ConsoleColors.RESET);
+            categoryId = InputHelper.askLong(scanner, "L'id de la catégorie : ");
         }
 
         Category category = categoryService.getCategoryById(categoryId).get();
         articleService.createArticle(brand, description, price, category);
 
-        System.out.println(Helper.ConsoleColors.GREEN + "Article créé avec succès !" + Helper.ConsoleColors.RESET);
+        System.out.println(ConsoleColors.GREEN + "Article créé avec succès !" + ConsoleColors.RESET);
     }
 
     /**
@@ -333,21 +268,21 @@ public class Helper {
      * @param categoryService Service pour gérer les catégories
      */
     public static void addCategory(Scanner scanner, CategoryService categoryService) {
-        String categoryName = askString(scanner, "Nom de la catégorie : ");
+        String categoryName = InputHelper.askString(scanner, "Nom de la catégorie : ");
 
         // Vérifie que la catégorie n'existe pas déjà
         while (categoryService.categoryExistsByName(categoryName)) {
-            System.out.println(Helper.ConsoleColors.RED + "Categorie déjà existante !" + Helper.ConsoleColors.RESET);
-            categoryName = askString(scanner, "Nom de la catégorie : ");
+            System.out.println(ConsoleColors.RED + "Categorie déjà existante !" + ConsoleColors.RESET);
+            categoryName = InputHelper.askString(scanner, "Nom de la catégorie : ");
         }
 
         categoryService.createCategory(categoryName);
         System.out
-                .println(Helper.ConsoleColors.GREEN + "Catégorie créée avec succès !" + Helper.ConsoleColors.RESET);
+                .println(ConsoleColors.GREEN + "Catégorie créée avec succès !" + ConsoleColors.RESET);
     }
 
     public static void displayArticlesByCategoryId(Scanner scanner, CategoryService categoryService) {
-        Long categoryId = askLong(scanner, "Quelle catégorie souhaitez-vous consulter ? ");
+        Long categoryId = InputHelper.askLong(scanner, "Quelle catégorie souhaitez-vous consulter ? ");
         Collection<Article> articles = categoryService.getArticlesByCategoryId(categoryId);
         System.out.println(articles);
         if (articles.isEmpty()) {
