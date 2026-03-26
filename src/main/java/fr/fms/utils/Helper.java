@@ -2,14 +2,8 @@ package fr.fms.utils;
 
 import org.springframework.data.domain.Page;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
-
-import fr.fms.entities.Article;
-import fr.fms.entities.Category;
-import fr.fms.service.ArticleService;
-import fr.fms.service.CategoryService;
 
 import fr.fms.utils.console.ConsoleColors;
 import fr.fms.utils.input.InputHelper;
