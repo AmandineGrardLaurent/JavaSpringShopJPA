@@ -1,5 +1,6 @@
 package fr.fms.controller;
 
+import java.util.Collection;
 import java.util.Scanner;
 
 import org.springframework.data.domain.Page;
@@ -94,6 +95,20 @@ public class ArticleConsoleController {
 
         }
 
+    }
+
+    public static void displayArticlesByCategoryId(Scanner scanner, CategoryService categoryService) {
+        Long categoryId = InputHelper.askLong(scanner, "Quelle catégorie souhaitez-vous consulter ? ");
+        Collection<Article> articles = categoryService.getArticlesByCategoryId(categoryId);
+        System.out.println(articles);
+        if (articles.isEmpty()) {
+            System.out.println(ConsoleColors.RED + "Aucun article dans cette catégorie." + ConsoleColors.RESET);
+        } else {
+            System.out.println(ConsoleColors.BLUE + "Articles de la catégorie : \n" + ConsoleColors.RESET);
+            for (Article article : articles) {
+                System.out.println(article);
+            }
+        }
     }
 
     /**
