@@ -14,6 +14,7 @@ import fr.fms.service.CategoryService;
 import fr.fms.utils.Helper;
 import fr.fms.utils.console.ConsoleColors;
 import fr.fms.controller.ArticleConsoleController;
+import fr.fms.controller.CategoryConsoleController;
 import fr.fms.entities.Article;
 
 @SpringBootApplication
@@ -60,13 +61,13 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 				case 6:
 					break;
 				case 7:
-					Helper.addCategory(scanner, categoryService);
+					CategoryConsoleController.addCategory(scanner, categoryService);
 					break;
 				case 8:
-					Helper.displayCategoryById(scanner, categoryService);
+					CategoryConsoleController.displayCategoryById(scanner, categoryService);
 					break;
 				case 9:
-					Helper.deleteCategoryById(scanner, categoryService);
+					CategoryConsoleController.deleteCategoryById(scanner, categoryService);
 					break;
 				case 10:
 					break;
