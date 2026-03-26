@@ -97,11 +97,14 @@ public class ArticleConsoleController {
 
     }
 
-    public static void displayArticlesByCategoryId(Scanner scanner, CategoryService categoryService) {
+    public static void displayArticlesByCategoryId(Scanner scanner, ArticleService articleService,
+            CategoryService categoryService) {
         Long categoryId = InputHelper.askLong(scanner, "Quelle catégorie souhaitez-vous consulter ? ");
-        Collection<Article> articles = categoryService.getArticlesByCategoryId(categoryId);
-        System.out.println(articles);
-        if (articles.isEmpty()) {
+        Collection<Article> articles = articleService.getArticlesByCategoryId(categoryId);
+
+        if (!categoryService.categoryExists(categoryId)) {
+            System.out.println(ConsoleColors.RED + "Cette catégorie n'existe pas." + ConsoleColors.RESET);
+        } else if (articles.isEmpty()) {
             System.out.println(ConsoleColors.RED + "Aucun article dans cette catégorie." + ConsoleColors.RESET);
         } else {
             System.out.println(ConsoleColors.BLUE + "Articles de la catégorie : \n" + ConsoleColors.RESET);

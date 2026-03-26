@@ -72,7 +72,7 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 				case 10:
 					break;
 				case 11:
-					ArticleConsoleController.displayArticlesByCategoryId(scanner, categoryService);
+					ArticleConsoleController.displayArticlesByCategoryId(scanner, articleService, categoryService);
 					break;
 				case 12:
 					System.out.println("Bonne journée et à bientôt.");
@@ -82,41 +82,6 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 					break;
 			}
 		}
-
-		// System.out.println("Affichage des articles de la catégorie 1 : ");
-		// for(Article article : articleService.getArticleByCategoryId(1L)){
-		// System.out.println(article);
-		// }
-
-		// System.out.println("Affichage de tous les articles de la marque Samsung et
-		// serie S: ");
-		// for(Article article :
-		// articleService.getArticleByBrandContainingAndDescriptionContaining("Sam",
-		// "S")){
-		// System.out.println(article);
-		// }
-
-		// System.out.println("Modification du prix de l'article 1 : 350 -> 300");
-		// articleService.updatePrice(1L, 300);
-
-		// System.out.println("Modification de la description de l'article 1 : S10 ->
-		// S11");
-		// articleService.updateDescription(1L, "S11");
-
-		// System.out.println("Affichage de toutes les catégories par ordre croissant :
-		// ");
-		// for(Category category : categoryService.getAllCategoryByOrderByNameAsc()){
-		// System.out.println(category);
-		// }
-
-		// System.out.println("Affichage de toutes les catégories par ordre décroissant
-		// : ");
-		// for(Category category : categoryService.getAllCategoryByOrderByNameDesc()){
-		// System.out.println(category);
-		// }
-
-		// // System.out.println("Suppression des articles moins de 301€");
-		// // articleService.deleteArticleByPriceLessThan(301);
 
 	}
 }
