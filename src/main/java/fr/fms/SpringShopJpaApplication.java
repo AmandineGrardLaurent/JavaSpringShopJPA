@@ -46,13 +46,13 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 							ConsoleColors.RED + "Aucun article trouvé" + ConsoleColors.GREEN);
 					break;
 				case 2:
-					Helper.displayArticlesByPage(scanner, articleService);
+					ArticleConsoleController.displayArticlesByPage(scanner, articleService);
 					break;
 				case 3:
 					ArticleConsoleController.addArticle(scanner, articleService, categoryService);
 					break;
 				case 4:
-					Helper.displayArticleById(scanner, articleService);
+					ArticleConsoleController.displayArticleById(scanner, articleService);
 					break;
 				case 5:
 					ArticleConsoleController.deleteArticleById(scanner, articleService);
