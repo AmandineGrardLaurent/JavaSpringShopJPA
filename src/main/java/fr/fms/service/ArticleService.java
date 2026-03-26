@@ -2,6 +2,9 @@ package fr.fms.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import fr.fms.dao.ArticleRepository;
 import fr.fms.entities.Article;
@@ -37,6 +40,11 @@ public class ArticleService {
 
     public boolean articleExists(Long articleId) {
         return articleRepository.existsById(articleId);
+    }
+
+    public Page<Article> getArticlesByPage(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return articleRepository.findAllByOrderByBrandAsc(pageable);
     }
 
     @Transactional
