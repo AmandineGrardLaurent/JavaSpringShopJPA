@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import fr.fms.entities.Article;
 
@@ -25,5 +27,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     @Modifying
     @Query("UPDATE Article a SET a.category = null WHERE a.category.id = :id")
     void removeCategoryFromArticles(@Param("id") Long categoryId);
+
+    Page<Article> findAllByOrderByBrandAsc(Pageable pageable);
 
 }
