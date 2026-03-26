@@ -30,7 +30,7 @@ public class ArticleService {
         return articleRepository.findById(id);
     }
 
-    public List<Article> getArticleByCategoryId(Long id) {
+    public List<Article> getArticlesByCategoryId(Long id) {
         return articleRepository.findByCategoryId(id);
     }
 
