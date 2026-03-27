@@ -19,7 +19,7 @@ public class Helper {
      * @return le choix saisi par l'utilisateur
      */
     public static int displayChoices(Scanner scanner) {
-        System.out.println("[1] Afficher tous les articles sans pagination\n"
+        System.out.println("\n[1] Afficher tous les articles sans pagination\n"
                 + "[2] Afficher tous les articles avec pagination\n"
                 + "********************************** \n"
                 + "[3] Ajouter un article\n"
@@ -51,7 +51,7 @@ public class Helper {
         if (items.isEmpty()) {
             System.out.println(ConsoleColors.RED + errorMessage + ConsoleColors.RESET);
         } else {
-            System.out.println(ConsoleColors.BLUE + title + ConsoleColors.RESET + "\n");
+            System.out.println(ConsoleColors.GREEN + title + ConsoleColors.RESET + "\n");
             for (T item : items) {
                 System.out.println(item);
             }

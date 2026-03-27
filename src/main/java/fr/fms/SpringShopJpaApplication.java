@@ -36,7 +36,7 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 		boolean exit = false;
 
 		System.out
-				.println(ConsoleColors.GREEN + "-- Bienvenue dans notre application de gestion d'articles -- \n"
+				.println(ConsoleColors.GREEN + "-- Bienvenue dans notre application de gestion d'articles --"
 						+ ConsoleColors.RESET);
 
 		while (!exit) {
@@ -78,10 +78,10 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 				case 12:
 					Helper.displayItems(categoryService.getAllCategoryByOrderByNameAsc(),
 							"Liste de tous les catégories : ",
-							ConsoleColors.RED + "Aucune catégorie trouvée" + ConsoleColors.GREEN);
+							ConsoleColors.RED + "Aucune catégorie trouvée" + ConsoleColors.RESET);
 					break;
 				case 13:
-					System.out.println("Bonne journée et à bientôt.");
+					System.out.println(ConsoleColors.YELLOW + "Bonne journée et à bientôt." + ConsoleColors.RESET);
 					exit = true;
 					break;
 				default:

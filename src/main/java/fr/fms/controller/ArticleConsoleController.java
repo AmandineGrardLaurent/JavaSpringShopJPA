@@ -19,19 +19,19 @@ public class ArticleConsoleController {
 
     /**
      * Affiche un article à partir de son id.
-     * 
-     * @param scanner        Scanner utilisé pour la saisie
-     * @param articleService Service pour accéder aux articles
      */
     public static void displayArticleById(Scanner scanner, ArticleService articleService) {
-        Long articleId = InputHelper.askLong(scanner, "Quel article souhaitez-vous consulter ?");
+        Long articleId = InputHelper.askLong(scanner,
+                ConsoleColors.BLUE + "-- Quel article souhaitez-vous consulter ? --" + ConsoleColors.RESET);
 
-        System.out.printf("Affichage de l'article %d :\n", articleId);
+        System.out.printf(ConsoleColors.GREEN + "\nAffichage de l'article %d :\n" + ConsoleColors.RESET, articleId);
 
         System.out.println(
                 articleService.getArticleById(articleId)
                         .map(Object::toString)
                         .orElse(ConsoleColors.RED + "Article introuvable \n" + ConsoleColors.RESET));
+
+        System.out.println("\n");
     }
 
     /**
@@ -52,20 +52,23 @@ public class ArticleConsoleController {
 
         while (!exit) {
             articlePage = articleService.getArticlesByPage(page, size);
-            System.out.printf(ConsoleColors.GREEN + "\n Page n°%d \n" + ConsoleColors.RESET, (page + 1));
+            System.out.printf(ConsoleColors.GREEN + "-- Page n°%d --" + ConsoleColors.RESET, (page + 1));
 
             for (Article article : articlePage.getContent()) {
                 System.out.println(article);
             }
 
+            System.out.println("");
             Helper.displayPagination(articlePage);
 
             System.out
-                    .println(ConsoleColors.BLUE + "\n [1] page précédent"
-                            + "\n [2] page suivante"
-                            + "\n [3] pagination"
-                            + "\n [4] quitter \n" + ConsoleColors.RESET);
-            int choice = InputHelper.askInt(scanner, "Faîtes votre choix : ");
+                    .println("[1] page précédent"
+                            + "\n[2] page suivante"
+                            + "\n[3] pagination"
+                            + "\n[4] quitter \n");
+
+            int choice = InputHelper.askInt(scanner,
+                    ConsoleColors.BLUE + "-- Faîtes votre choix : --" + ConsoleColors.RESET);
 
             switch (choice) {
                 case 1:
@@ -85,7 +88,8 @@ public class ArticleConsoleController {
                     }
                     break;
                 case 3:
-                    size = InputHelper.askInt(scanner, "Combien d'articles par page ? ");
+                    size = InputHelper.askInt(scanner,
+                            ConsoleColors.BLUE + "-- Combien d'articles par page ? --" + ConsoleColors.RESET);
                     page = 0;
                     break;
                 case 4:
@@ -99,6 +103,9 @@ public class ArticleConsoleController {
 
     }
 
+    /**
+     * Affiche les articles d'une catégorie
+     */
     public static void displayArticlesByCategoryId(Scanner scanner, ArticleService articleService,
             CategoryService categoryService) {
         Long categoryId = InputHelper.askLong(scanner, "Quelle catégorie souhaitez-vous consulter ? ");
@@ -118,9 +125,6 @@ public class ArticleConsoleController {
 
     /**
      * Supprime un article à partir de son id après vérification de son existence.
-     * 
-     * @param scanner        Scanner utilisé pour la saisie
-     * @param articleService Service pour accéder aux articles
      */
     public static void deleteArticleById(Scanner scanner, ArticleService articleService) {
         Long articleId = InputHelper.askLong(scanner, "Quel article (id) voulez-vous supprimer ? ");
@@ -133,7 +137,7 @@ public class ArticleConsoleController {
 
         articleService.deleteArticle(articleId);
         System.out.printf(
-                ConsoleColors.GREEN + "Article %d supprimé avec succès \n" + ConsoleColors.RESET,
+                ConsoleColors.GREEN + "Article %d supprimé avec succès" + ConsoleColors.RESET,
                 articleId);
 
     }
@@ -141,10 +145,6 @@ public class ArticleConsoleController {
     /**
      * Ajoute un nouvel article via la console.
      * Vérifie que la catégorie existe avant de créer l'article.
-     * 
-     * @param scanner         Scanner utilisé pour la saisie
-     * @param articleService  Service pour gérer les articles
-     * @param categoryService Service pour gérer les catégories
      */
     public static void addArticle(Scanner scanner, ArticleService articleService, CategoryService categoryService) {
         String brand = InputHelper.askString(scanner, "La marque : ");
@@ -164,39 +164,47 @@ public class ArticleConsoleController {
         System.out.println(ConsoleColors.GREEN + "Article créé avec succès !" + ConsoleColors.RESET);
     }
 
+    /**
+     * Modifie un article via la console
+     */
     public static void updateArticle(Scanner scanner, ArticleService articleService,
             CategoryService categoryService) {
 
-        Long articleId = InputHelper.askLong(scanner, "Quel article (id) voulez-vous modifier ? \n");
+        Long articleId = InputHelper.askLong(scanner,
+                ConsoleColors.BLUE + "-- Quel article (id) voulez-vous modifier ? -- \n" + ConsoleColors.RESET);
 
         Optional<Article> optionalArticle = articleService.getArticleById(articleId);
 
         if (!optionalArticle.isPresent()) {
-            System.out.println(ConsoleColors.RED + "Article introuvable !" + ConsoleColors.RESET);
+            System.out.println(ConsoleColors.RED + "Article introuvable !\n" + ConsoleColors.RESET);
             return;
         }
 
         Article article = optionalArticle.get();
 
-        String brandInput = InputHelper.askString(scanner, "Nouvelle marque (vide pour ignorer) : ");
+        String brandInput = InputHelper.askString(scanner,
+                ConsoleColors.YELLOW + "Nouvelle marque (vide pour ignorer) : " + ConsoleColors.RESET);
         if (!brandInput.isEmpty())
             article.setBrand(brandInput);
 
-        String descriptionInput = InputHelper.askString(scanner, "Nouvelle description (vide pour ignorer) : ");
+        String descriptionInput = InputHelper.askString(scanner,
+                ConsoleColors.YELLOW + "Nouvelle description (vide pour ignorer) : " + ConsoleColors.RESET);
         if (!descriptionInput.isEmpty())
             article.setDescription(descriptionInput);
 
-        String priceInput = InputHelper.askString(scanner, "Nouveau prix (vide pour ignorer) : ");
+        String priceInput = InputHelper.askString(scanner,
+                ConsoleColors.YELLOW + "Nouveau prix (vide pour ignorer) : " + ConsoleColors.RESET);
         if (!priceInput.isEmpty()) {
             try {
                 double price = Double.parseDouble(priceInput);
                 article.setPrice(price);
             } catch (NumberFormatException e) {
-                System.out.println(ConsoleColors.RED + "Prix invalide !" + ConsoleColors.RESET);
+                System.out.println(ConsoleColors.RED + "Prix invalide !\n" + ConsoleColors.RESET);
             }
         }
 
-        String categoryInput = InputHelper.askString(scanner, "Nouvelle catégorie (id, vide pour ignorer) : ");
+        String categoryInput = InputHelper.askString(scanner,
+                ConsoleColors.YELLOW + "Nouvelle catégorie (id, vide pour ignorer) : " + ConsoleColors.RESET);
         if (!categoryInput.isEmpty()) {
             try {
                 Long categoryId = Long.parseLong(categoryInput);
@@ -210,11 +218,11 @@ public class ArticleConsoleController {
                 article.setCategory(category);
 
             } catch (NumberFormatException e) {
-                System.out.println(ConsoleColors.RED + "Id de la catégorie invalide !" + ConsoleColors.RESET);
+                System.out.println(ConsoleColors.RED + "Id de la catégorie invalide !\n" + ConsoleColors.RESET);
             }
         }
         articleService.saveArticle(article);
 
-        System.out.println(ConsoleColors.GREEN + "Article mis à jour !" + ConsoleColors.RESET);
+        System.out.println(ConsoleColors.GREEN + "\nArticle mis à jour ! \n" + ConsoleColors.RESET);
     }
 }

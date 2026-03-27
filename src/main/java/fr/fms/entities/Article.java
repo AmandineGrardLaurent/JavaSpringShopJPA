@@ -76,12 +76,12 @@ public class Article implements Serializable {
 
     @Override
     public String toString() {
-        return "Article{" +
-                "id=" + id +
-                ", brand='" + brand + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                ", category=" + (category != null ? category.getName() : "Aucune") +
-                '}';
+        return String.format(
+                "| %-5s | %-15s | %-25s | %9.2f $ | %-20s |",
+                id,
+                brand,
+                description,
+                price,
+                (category != null ? category.getName() : "Aucune"));
     }
 }
