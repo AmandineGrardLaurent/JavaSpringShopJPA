@@ -9,9 +9,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Page;
+import javax.validation.Valid;
+import org.springframework.validation.BindingResult;
 
 @Controller
 public class ArticleController {
@@ -30,9 +33,25 @@ public class ArticleController {
         return "articles";
     }
 
-    @GetMapping("/delete")
+    @GetMapping("/article/delete")
     public String delete(Long id, int page, String search) {
         articleRepository.deleteById(id);
         return "redirect:/index?page=" + page + "&search=" + search;
+    }
+
+    @GetMapping("/article/add")
+    public String addForm(Model model) {
+        model.addAttribute("article", new Article());
+        return "articleAdd";
+    }
+
+    @PostMapping("/article/save")
+    public String save(Model model, @Valid Article article, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("article", article);
+            return "articleAdd";
+        }
+        articleRepository.save(article);
+        return "redirect:/index";
     }
 }
