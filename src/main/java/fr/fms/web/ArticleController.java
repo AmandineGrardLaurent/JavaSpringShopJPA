@@ -29,4 +29,10 @@ public class ArticleController {
         model.addAttribute("search", search);
         return "articles";
     }
+
+    @GetMapping("/delete")
+    public String delete(Long id, int page, String search) {
+        articleRepository.deleteById(id);
+        return "redirect:/index?page=" + page + "&search=" + search;
+    }
 }
