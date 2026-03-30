@@ -33,12 +33,14 @@ public class CategoryConsoleController {
      * @param categoryService Service pour accéder aux catégories
      */
     public static void deleteCategoryById(Scanner scanner, CategoryService categoryService) {
-        Long categoryId = InputHelper.askLong(scanner, "Quelle catégorie (id) voulez-vous supprimer ? ");
+        Long categoryId = InputHelper.askLong(scanner,
+                ConsoleColors.BLUE + "-- Quelle catégorie (id) voulez-vous supprimer ? --" + ConsoleColors.RESET);
 
         // Vérifie si la catégorie existe
         while (!categoryService.categoryExists(categoryId)) {
             System.out.println(ConsoleColors.RED + "Catégorie inexistante !" + ConsoleColors.RESET);
-            categoryId = InputHelper.askLong(scanner, "Quelle catégorie (id) voulez-vous supprimer ? ");
+            categoryId = InputHelper.askLong(scanner,
+                    ConsoleColors.BLUE + "-- Quelle catégorie (id) voulez-vous supprimer ? --" + ConsoleColors.RESET);
         }
 
         categoryService.deleteCategory(categoryId);

@@ -91,21 +91,19 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 
 		// -------------------------- EXO 1 --------------------------
 
-		// // Category smartphone = categoryRepository.save(new Category("Smartphone"));
-		// // Category tablet = categoryRepository.save(new Category("Tablet"));
-		// // Category laptop = categoryRepository.save(new Category("Laptop"));
+		// Category smartphone = categoryRepository.save(new Category("Smartphone"));
+		// Category tablet = categoryRepository.save(new Category("Tablet"));
+		// Category laptop = categoryRepository.save(new Category("Laptop"));
 
-		// // articleRepository.save(new Article(null,"Samsung", "S10", 500,
-		// smartphone));
-		// // articleRepository.save(new Article(null,"Samsung", "S9", 350,
-		// smartphone));
+		// articleRepository.save(new Article(null,"Samsung", "S10", 500,smartphone));
+		// articleRepository.save(new Article(null,"Samsung", "S9", 350,smartphone));
 
-		// // articleRepository.save(new Article(null,"Asus", "R510", 600, laptop));
+		// articleRepository.save(new Article(null,"Asus", "R510", 600, laptop));
 
-		// // articleRepository.save(new Article(null,"Ipad", "Apple", 350, tablet));
+		// articleRepository.save(new Article(null,"Ipad", "Apple", 350, tablet));
 
 		// System.out.println("Affichage des articles de la catégorie 1 : ");
-		// for(Article article : articleRepository.findByCategoryId(1L)){
+		// for (Article article : articleRepository.findByCategoryId(1L)) {
 		// System.out.println(article);
 		// }
 
@@ -113,13 +111,13 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 		// System.out.println(articleRepository.findById(1L));
 
 		// System.out.println("Affichage de tous les articles : ");
-		// for(Article article : articleRepository.findAll()){
+		// for (Article article : articleRepository.findAll()) {
 		// System.out.println(article);
 		// }
 
 		// System.out.println("Affichage de tous les articles de la marque Samsung et
 		// serie S: ");
-		// for(Article article : articleRepository.searchArticles("Sam", "S")){
+		// for (Article article : articleRepository.searchArticles("Sam", "S")) {
 		// System.out.println(article);
 		// }
 
@@ -127,13 +125,13 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 		// // articleRepository.deleteById(3L);
 
 		// System.out.println("Affichage de tous les articles : ");
-		// for(Article article : articleRepository.findAll()){
+		// for (Article article : articleRepository.findAll()) {
 		// System.out.println(article);
 		// }
 
 		// System.out.println("Modification du prix de l'article 1 : 350 -> 300");
 		// Optional<Article> optional = articleRepository.findById(1L);
-		// if(optional.isPresent()){
+		// if (optional.isPresent()) {
 		// Article article = optional.get();
 		// article.setPrice(300);
 		// articleRepository.save(article);
@@ -142,7 +140,7 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 		// System.out.println("Modification de la description de l'article 1 : S10 ->
 		// S11");
 		// Optional<Article> optional1 = articleRepository.findById(1L);
-		// if(optional.isPresent()){
+		// if (optional.isPresent()) {
 		// Article article = optional1.get();
 		// article.setDescription("S11");
 		// articleRepository.save(article);
@@ -151,19 +149,19 @@ public class SpringShopJpaApplication implements CommandLineRunner {
 		// System.out.println("Affiche d'un article 2 : ");
 		// System.out.println(articleRepository.findById(1L));
 
-		// System.out.println("Affichage de toutes les catégories par ordre croissant :
-		// ");
-		// for(Category category : categoryRepository.findAllByOrderByNameAsc()){
+		// System.out.println("Affichage de toutes les catégories par ordre croissant
+		// :");
+		// for (Category category : categoryRepository.findAllByOrderByNameAsc()) {
 		// System.out.println(category);
 		// }
 
 		// System.out.println("Affichage de toutes les catégories par ordre décroissant
 		// : ");
-		// for(Category category : categoryRepository.findAllByOrderByNameDesc()){
+		// for (Category category : categoryRepository.findAllByOrderByNameDesc()) {
 		// System.out.println(category);
 		// }
 
-		// // System.out.println("Suppression des articles moins de 301€");
-		// // articleRepository.deleteByPriceLessThan(301);
+		// System.out.println("Suppression des articles moins de 301€");
+		// articleRepository.deleteByPriceLessThan(301);
 	}
 }
