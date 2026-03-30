@@ -30,4 +30,6 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 
     Page<Article> findAllByOrderByBrandAsc(Pageable pageable);
 
+    Page<Article> findByDescriptionContainsIgnoreCase(String description, Pageable pageable);
+
 }
