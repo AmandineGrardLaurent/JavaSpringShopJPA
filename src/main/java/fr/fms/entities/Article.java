@@ -7,6 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.validation.constraints.DecimalMin;
 
 @Entity
 public class Article implements Serializable {
@@ -15,8 +18,17 @@ public class Article implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull(message = "La marque est obligatoire")
+    @Size(min = 5, max = 50, message = "La marque doit comporter entre 5 et 50 caractères")
     private String brand;
+
+    @NotNull(message = "La description est obligatoire")
+    @Size(min = 5, max = 75, message = "La description doit comporter entre 5 et 75 caractères")
     private String description;
+
+    @NotNull(message = "Le prix est obligatoire")
+    @DecimalMin(value = "0.01", message = "Le prix doit être un nombre positif")
     private double price;
 
     @ManyToOne
