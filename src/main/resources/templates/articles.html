@@ -21,16 +21,17 @@
           method="get"
           class="flex w-full max-w-xl shadow-sm"
         >
-          <span
+          <label
             class="flex items-center px-3 bg-white border border-gray-300 rounded-l-md text-gray-500"
           >
             🔍
-          </span>
+          </label>
 
           <input
             type="text"
             name="search"
             placeholder="Rechercher un article..."
+            th:value="${search}"
             class="w-full px-4 py-2 border-t border-b border-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400"
           />
 
@@ -83,7 +84,7 @@
         <ul class="flex gap-2">
           <li th:each="page, status : ${pages}">
             <a
-              th:href="@{/index(page=${status.index})}"
+              th:href="@{/index(page=${status.index}, search=${search})}"
               th:text="${status.index}"
               class="px-4 py-2 rounded-md border transition"
               th:classappend="${currentPage == status.index} ? 'bg-pink-400 text-white border-pink-400' : 'bg-white text-gray-700 hover:bg-gray-200'"

@@ -26,6 +26,7 @@ public class ArticleController {
         model.addAttribute("listArticle", articles.getContent());
         model.addAttribute("pages", new int[articles.getTotalPages()]);
         model.addAttribute("currentPage", page);
+        model.addAttribute("search", search);
         return "articles";
     }
 }
