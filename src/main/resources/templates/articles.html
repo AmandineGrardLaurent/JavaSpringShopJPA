@@ -57,6 +57,7 @@
                 <th class="p-4 text-left">Marque</th>
                 <th class="p-4 text-left">Description</th>
                 <th class="p-4 text-left">Prix</th>
+                <th class="p-4 text-left">Catégorie</th>
                 <th class="p-4 text-left"></th>
               </tr>
             </thead>
@@ -76,12 +77,17 @@
                   th:text="${article.description}"
                 ></td>
                 <td
-                  class="p-4 font-semibold text-green-600"
+                  class="p-4 font-semibold text-gray-600"
                   th:text="${article.price}"
+                ></td>
+                <td
+                  class="p-4 text-gray-600"
+                  th:text="${article.category != null ? article.category.name : 'Aucune'}"
                 ></td>
                 <td>
                   <a
                     th:href="@{/article/delete(id=${article.id}, page=${currentPage}, search =${search})}"
+                    class="p-4 text-pink-400 underline"
                     >Supprimer</a
                   >
                 </td>
