@@ -1,5 +1,7 @@
 package fr.fms.web;
 
+import fr.fms.dao.CategoryRepository;
+import fr.fms.entities.Category;
 import fr.fms.dao.ArticleRepository;
 import fr.fms.entities.Article;
 import org.springframework.ui.Model;
@@ -20,6 +22,9 @@ import org.springframework.validation.BindingResult;
 public class ArticleController {
     @Autowired
     ArticleRepository articleRepository;
+
+    @Autowired
+    CategoryRepository categoryRepository;
 
     @GetMapping("/index")
     public String index(Model model, @RequestParam(name = "page", defaultValue = "0") int page,
@@ -42,6 +47,7 @@ public class ArticleController {
     @GetMapping("/article/add")
     public String addForm(Model model) {
         model.addAttribute("article", new Article());
+        model.addAttribute("categories", categoryRepository.findAll());
         return "articleAdd";
     }
 
@@ -49,8 +55,16 @@ public class ArticleController {
     public String save(Model model, @Valid Article article, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("article", article);
+            model.addAttribute("categories", categoryRepository.findAll());
             return "articleAdd";
         }
+        if (article.getCategory() != null && article.getCategory().getId() != null) {
+            Category category = categoryRepository
+                    .findById(article.getCategory().getId())
+                    .orElse(null);
+            article.setCategory(category);
+        }
+
         articleRepository.save(article);
         return "redirect:/index";
     }

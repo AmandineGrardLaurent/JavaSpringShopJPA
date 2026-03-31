@@ -79,6 +79,29 @@
             <span th:errors="${article.price}"></span>
           </div>
 
+          <!-- Category -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Catégorie
+            </label>
+
+            <div class="space-y-2">
+              <div
+                th:each="category : ${categories}"
+                class="flex items-center gap-2"
+              >
+                <input
+                  type="radio"
+                  th:field="*{category.id}"
+                  th:value="${category.id}"
+                  class="accent-pink-400"
+                />
+
+                <label th:text="${category.name}" class="text-gray-700"></label>
+              </div>
+            </div>
+          </div>
+
           <!-- Button -->
           <button
             type="submit"
