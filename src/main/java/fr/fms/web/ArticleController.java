@@ -27,14 +27,30 @@ public class ArticleController {
     CategoryRepository categoryRepository;
 
     @GetMapping("/index")
-    public String index(Model model, @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "search", defaultValue = "") String search) {
+    public String index(Model model,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "search", defaultValue = "") String search,
+            @RequestParam(name = "categoryId", required = false) Long categoryId) {
         // Page<Article> articles = articleRepository.findAll(PageRequest.of(page, 5));
-        Page<Article> articles = articleRepository.findByDescriptionContainsIgnoreCase(search, PageRequest.of(page, 5));
+        Page<Article> articles;
+
+        if (categoryId != null) {
+            articles = articleRepository
+                    .findByCategoryIdAndDescriptionContainsIgnoreCase(
+                            categoryId, search, PageRequest.of(page, 5));
+        } else {
+            articles = articleRepository
+                    .findByDescriptionContainsIgnoreCase(
+                            search, PageRequest.of(page, 5));
+        }
+
         model.addAttribute("listArticle", articles.getContent());
         model.addAttribute("pages", new int[articles.getTotalPages()]);
         model.addAttribute("currentPage", page);
         model.addAttribute("search", search);
+        model.addAttribute("categoryId", categoryId);
+        model.addAttribute("categories", categoryRepository.findAll());
+
         return "articles";
     }
 
