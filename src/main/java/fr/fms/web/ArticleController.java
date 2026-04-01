@@ -84,4 +84,15 @@ public class ArticleController {
         articleRepository.save(article);
         return "redirect:/index";
     }
+
+    @GetMapping("/article/edit")
+    public String edit(Long id, Model model) {
+        Article article = articleRepository.findById(id).orElse(null);
+
+        model.addAttribute("article", article);
+        model.addAttribute("categories", categoryRepository.findAll());
+
+        return "articleAdd";
+    }
+
 }
