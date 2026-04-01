@@ -87,6 +87,7 @@
                 <th class="p-4 text-left">Prix</th>
                 <th class="p-4 text-left">Catégorie</th>
                 <th class="p-4 text-left"></th>
+                <th class="p-4 text-left"></th>
               </tr>
             </thead>
 
@@ -117,6 +118,13 @@
                     th:href="@{/article/delete(id=${article.id}, page=${currentPage}, search=${search})}"
                     class="p-4 text-pink-400 underline"
                     >Supprimer</a
+                  >
+                </td>
+                <td>
+                  <a
+                    th:href="@{/article/edit(id=${article.id}, page=${currentPage}, search=${search})}"
+                    class="p-4 text-purple-400 underline"
+                    >Modifier</a
                   >
                 </td>
               </tr>
