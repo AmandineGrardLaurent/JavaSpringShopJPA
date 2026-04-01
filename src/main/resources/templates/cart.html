@@ -1,0 +1,66 @@
+<!doctype html>
+<html
+  xmlns:th="http://thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="layout"
+>
+  <head>
+    <meta charset="ISO-8859-1" />
+    <title>Panier</title>
+  </head>
+
+  <body layout:fragment="content">
+    <div class="bg-gray-100 min-h-screen p-8">
+      <!-- Container -->
+      <div class="max-w-6xl mx-auto">
+        <!-- Title -->
+        <h1 class="text-2xl font-bold mb-6 text-gray-800">Panier</h1>
+
+        <!-- Table -->
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+          <table class="w-full">
+            <thead class="bg-pink-400 text-white">
+              <tr>
+                <th class="p-4 text-left">Id</th>
+                <th class="p-4 text-left">Marque</th>
+                <th class="p-4 text-left">Description</th>
+                <th class="p-4 text-left">Prix</th>
+                <th class="p-4 text-left">Catégorie</th>
+                <th class="p-4 text-left">Quantité</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr
+                th:each="cartArticle : ${cartArticleList}"
+                class="border-b hover:bg-gray-50 transition"
+              >
+                <td class="p-4" th:text="${cartArticle.article.id}"></td>
+                <td
+                  class="p-4 font-medium text-gray-700"
+                  th:text="${cartArticle.article.brand}"
+                ></td>
+                <td
+                  class="p-4 text-gray-600"
+                  th:text="${cartArticle.article.description}"
+                ></td>
+                <td
+                  class="p-4 font-semibold text-gray-600"
+                  th:text="${cartArticle.article.price}"
+                ></td>
+                <td
+                  class="p-4 text-gray-600"
+                  th:text="${cartArticle.article.category != null ? cartArticle.article.category.name : 'Aucune'}"
+                ></td>
+                <td
+                  class="p-4 text-gray-600"
+                  th:text="${cartArticle.quantity}"
+                ></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
