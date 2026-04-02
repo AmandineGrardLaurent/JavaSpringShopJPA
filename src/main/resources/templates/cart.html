@@ -76,13 +76,13 @@
                       name="quantity"
                       min="0"
                       th:value="${cartArticle.quantity}"
-                      class="w-16 text-center border rounded"
+                      class="w-16 text-center border rounded-md px-2 py-1 focus:ring-2 focus:ring-pink-400"
                     />
 
                     <!-- bouton update -->
                     <button
                       type="submit"
-                      class="text-blue-500 underline hover:text-blue-700"
+                      class="bg-purple-500 text-white px-3 py-1 rounded-md hover:bg-purple-700 transition text-sm shadow-sm"
                     >
                       valider
                     </button>
@@ -90,13 +90,13 @@
                 </td>
                 <td
                   th:text="${cartArticle.quantity} * ${cartArticle.article.price} + '€'"
-                  class="p-4 font-semibold text-green-600"
+                  class="p-4 font-semibold text-pink-500"
                 ></td>
-                <td>
+                <td class="p-4 text-center">
                   <a
                     th:href="@{/cart/delete(id=${cartArticle.id})}"
-                    class="p-4 text-pink-400 underline"
-                    >Supprimer</a
+                    class="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition text-sm shadow-sm"
+                    >X</a
                   >
                 </td>
               </tr>
@@ -110,7 +110,19 @@
         >
           Votre panier est vide.
         </p>
-        <p th:text="'Prix total : ' + ${totalPrice} + '€'"></p>
+        <div
+          class="flex justify-end mt-6"
+          th:if="${cartArticleList != null and !cartArticleList.isEmpty()}"
+        >
+          <div class="bg-white shadow-md rounded-lg p-6 w-75 text-left">
+            <p class="text-gray-500 text-sm mb-2 underline">Total du panier</p>
+
+            <p
+              class="text-2xl font-bold text-pink-500"
+              th:text="${totalPrice + ' €'}"
+            ></p>
+          </div>
+        </div>
       </div>
     </div>
   </body>
