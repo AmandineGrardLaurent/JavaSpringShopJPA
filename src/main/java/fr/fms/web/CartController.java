@@ -104,4 +104,10 @@ public class CartController {
         return "redirect:/cart";
     }
 
+    @GetMapping("/cart/delete")
+    public String delete(Long id) {
+        cartArticleRepository.deleteById(id);
+        return "redirect:/cart";
+    }
+
 }
