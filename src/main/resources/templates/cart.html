@@ -27,9 +27,10 @@
                 <th class="p-4 text-left">Id</th>
                 <th class="p-4 text-left">Marque</th>
                 <th class="p-4 text-left">Description</th>
-                <th class="p-4 text-left">Prix</th>
+                <th class="p-4 text-left">Prix unitaire</th>
                 <th class="p-4 text-left">Catégorie</th>
                 <th class="p-4 text-left">Quantité</th>
+                <th class="p-4 text-left">Total</th>
                 <th class="p-4 text-left"></th>
               </tr>
             </thead>
@@ -87,6 +88,10 @@
                     </button>
                   </form>
                 </td>
+                <td
+                  th:text="${cartArticle.quantity} * ${cartArticle.article.price} + '€'"
+                  class="p-4 font-semibold text-green-600"
+                ></td>
                 <td>
                   <a
                     th:href="@{/cart/delete(id=${cartArticle.id})}"
