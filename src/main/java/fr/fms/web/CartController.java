@@ -19,6 +19,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+/**
+ * Controller responsible for managing the shopping cart.
+ *
+ * Handles operations such as displaying the cart, adding articles,
+ * updating quantities, and removing items.
+ *
+ * Note: User authentication is not yet implemented, so a default
+ * user (id = 1) is used.
+ */
 @Controller
 public class CartController {
     @Autowired
@@ -33,6 +42,12 @@ public class CartController {
     @Autowired
     ArticleRepository articleRepository;
 
+    /**
+     * Displays the current user's cart.
+     * 
+     * If the cart does not exist for the user, it will be created automatically.
+     * Calculates the total price of all items in the cart.
+     */
     @GetMapping("/cart")
     public String cart(Model model) {
         // user id hardcoded before implementing authentification
@@ -57,6 +72,12 @@ public class CartController {
         return "cart";
     }
 
+    /**
+     * Adds an article to the cart.
+     *
+     * If the article already exists in the cart, its quantity is incremented.
+     * Otherwise, a new CartArticle entry is created.
+     */
     @PostMapping("/cart/save")
     public String save(Long articleId, int quantity) {
 
@@ -93,6 +114,11 @@ public class CartController {
         return "redirect:/cart";
     }
 
+    /**
+     * Updates the quantity of an article in the cart.
+     *
+     * If quantity is set to 0 or less, the item is removed from the cart.
+     */
     @PostMapping("/cart/edit")
     public String edit(Long cartArticleId, int quantity) {
 
@@ -109,6 +135,9 @@ public class CartController {
         return "redirect:/cart";
     }
 
+    /**
+     * Removes an article from the cart.
+     */
     @GetMapping("/cart/delete")
     public String delete(Long id) {
         cartArticleRepository.deleteById(id);
