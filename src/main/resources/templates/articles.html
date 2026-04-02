@@ -117,15 +117,16 @@
                 <td>
                   <a
                     th:href="@{/article/delete(id=${article.id}, page=${currentPage}, search=${search})}"
-                    class="p-4 text-pink-400 underline"
-                    >Supprimer</a
+                    class="inline-flex items-center gap-1 bg-pink-300 text-gray-600 px-3 py-1.5 rounded-md hover:bg-pink-400 transition text-sm shadow-sm"
+                  >
+                    supprimer</a
                   >
                 </td>
                 <td>
                   <a
                     th:href="@{/article/edit(id=${article.id}, page=${currentPage}, search=${search})}"
-                    class="p-4 text-purple-400 underline"
-                    >Modifier</a
+                    class="inline-flex items-center gap-1 bg-pink-300 text-gray-600 px-3 py-1.5 rounded-md hover:bg-pink-400 transition text-sm shadow-sm"
+                    >modifier</a
                   >
                 </td>
                 <td>
@@ -139,9 +140,9 @@
 
                     <button
                       type="submit"
-                      class="text-purple-400 underline hover:text-purple-600"
+                      class="inline-flex items-center gap-1 bg-purple-300 text-gray-700 px-3 py-1.5 rounded-md hover:bg-purple-400 transition text-sm shadow-sm"
                     >
-                      Ajouter au panier
+                      panier
                     </button>
                   </form>
                 </td>
