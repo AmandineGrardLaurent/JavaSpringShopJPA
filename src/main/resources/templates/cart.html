@@ -30,6 +30,7 @@
                 <th class="p-4 text-left">Prix</th>
                 <th class="p-4 text-left">Catégorie</th>
                 <th class="p-4 text-left">Quantité</th>
+                <th class="p-4 text-left"></th>
               </tr>
             </thead>
 
@@ -85,6 +86,13 @@
                       valider
                     </button>
                   </form>
+                </td>
+                <td>
+                  <a
+                    th:href="@{/cart/delete(id=${cartArticle.id})}"
+                    class="p-4 text-pink-400 underline"
+                    >Supprimer</a
+                  >
                 </td>
               </tr>
             </tbody>
