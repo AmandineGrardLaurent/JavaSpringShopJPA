@@ -10,4 +10,6 @@ import fr.fms.entities.CartArticle;
 
 public interface CartArticleRepository extends JpaRepository<CartArticle, Long> {
     public List<CartArticle> findByCartId(Long cartId);
+
+    public Optional<CartArticle> findByCartIdAndArticleId(Long cartId, Long articleId);
 }
