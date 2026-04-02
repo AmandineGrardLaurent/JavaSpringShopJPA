@@ -17,7 +17,10 @@
         <h1 class="text-2xl font-bold mb-6 text-gray-800">Panier</h1>
 
         <!-- Table -->
-        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div
+          class="bg-white shadow-md rounded-lg overflow-hidden"
+          th:if="${cartArticleList != null and !cartArticleList.isEmpty()}"
+        >
           <table class="w-full">
             <thead class="bg-pink-400 text-white">
               <tr>
@@ -52,14 +55,48 @@
                   class="p-4 text-gray-600"
                   th:text="${cartArticle.article.category != null ? cartArticle.article.category.name : 'Aucune'}"
                 ></td>
-                <td
-                  class="p-4 text-gray-600"
-                  th:text="${cartArticle.quantity}"
-                ></td>
+
+                <!-- quantity -->
+                <td class="p-4">
+                  <form
+                    th:action="@{/cart/edit}"
+                    method="post"
+                    class="flex items-center gap-2"
+                  >
+                    <input
+                      type="hidden"
+                      name="cartArticleId"
+                      th:value="${cartArticle.id}"
+                    />
+
+                    <input
+                      type="number"
+                      name="quantity"
+                      min="0"
+                      th:value="${cartArticle.quantity}"
+                      class="w-16 text-center border rounded"
+                    />
+
+                    <!-- bouton update -->
+                    <button
+                      type="submit"
+                      class="text-blue-500 underline hover:text-blue-700"
+                    >
+                      valider
+                    </button>
+                  </form>
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
+        <!-- Message if the cart is empty -->
+        <p
+          class="text-center text-gray-500 mt-10"
+          th:if="${cartArticleList == null or cartArticleList.isEmpty()}"
+        >
+          Votre panier est vide.
+        </p>
       </div>
     </div>
   </body>
