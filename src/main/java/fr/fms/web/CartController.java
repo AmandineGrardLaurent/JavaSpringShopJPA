@@ -48,7 +48,12 @@ public class CartController {
                 });
         List<CartArticle> cartArticlesList = cartArticleRepository.findByCartId(cart.getId());
 
+        double totalPrice = cartArticlesList.stream()
+                .mapToDouble(cartArticle -> cartArticle.getQuantity() * cartArticle.getArticle().getPrice())
+                .sum();
+
         model.addAttribute("cartArticleList", cartArticlesList);
+        model.addAttribute("totalPrice", totalPrice);
         return "cart";
     }
 
