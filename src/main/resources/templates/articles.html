@@ -88,6 +88,7 @@
                 <th class="p-4 text-left">Catégorie</th>
                 <th class="p-4 text-left"></th>
                 <th class="p-4 text-left"></th>
+                <th class="p-4 text-left"></th>
               </tr>
             </thead>
 
@@ -126,6 +127,23 @@
                     class="p-4 text-purple-400 underline"
                     >Modifier</a
                   >
+                </td>
+                <td>
+                  <form th:action="@{/cart/save}" method="post">
+                    <input
+                      type="hidden"
+                      name="articleId"
+                      th:value="${article.id}"
+                    />
+                    <input type="hidden" name="quantity" value="1" />
+
+                    <button
+                      type="submit"
+                      class="text-purple-400 underline hover:text-purple-600"
+                    >
+                      Ajouter au panier
+                    </button>
+                  </form>
                 </td>
               </tr>
             </tbody>
