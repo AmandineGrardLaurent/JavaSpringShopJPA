@@ -63,4 +63,21 @@ public class ArticleServiceTest {
         verify(articleRepository).findById(10L);
     }
 
+    @Test
+    void should_return_empty_when_article_not_found() {
+        // Test to verify that the service return empty when the article is not found by
+        // its ID
+
+        System.out.println("Test: should_return_empty_when_article_not_found");
+
+        when(articleRepository.findById(99L))
+                .thenReturn(Optional.empty());
+
+        Optional<Article> result = articleService.getArticleById(99L);
+
+        assertFalse(result.isPresent());
+
+        verify(articleRepository).findById(99L);
+    }
+
 }
