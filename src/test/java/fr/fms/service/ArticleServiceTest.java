@@ -140,4 +140,21 @@ public class ArticleServiceTest {
         verify(articleRepository, times(1)).deleteById(articleId);
     }
 
+    @Test
+    void should_delete_articles_below_price() {
+        // Test to verify that the service correctly deletes articles with a price less
+        // than a specified value
+
+        System.out.println("Test: should_delete_articles_below_price");
+
+        // GIVEN
+        double articlePrice = 200;
+
+        // WHEN
+        articleService.deleteArticleByPriceLessThan(articlePrice);
+
+        // THEN
+        verify(articleRepository, times(1)).deleteByPriceLessThan(200);
+    }
+
 }
