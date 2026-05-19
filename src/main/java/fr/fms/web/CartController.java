@@ -1,4 +1,4 @@
-package fr.fms.controller;
+package fr.fms.web;
 
 import fr.fms.dao.ArticleRepository;
 import fr.fms.dao.CartArticleRepository;
