@@ -8,14 +8,12 @@ import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import fr.fms.entities.Category;
 import fr.fms.service.ArticleService;
 import fr.fms.service.CategoryService;
 import fr.fms.utils.Helper;
 import fr.fms.utils.console.ConsoleColors;
 import fr.fms.controller.ArticleConsoleController;
 import fr.fms.controller.CategoryConsoleController;
-import fr.fms.entities.Article;
 
 @SpringBootApplication
 public class SpringShopJpaApplication implements CommandLineRunner {

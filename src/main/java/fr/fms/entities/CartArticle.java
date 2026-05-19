@@ -1,7 +1,6 @@
 package fr.fms.entities;
 
 import java.io.Serializable;
-import java.util.Collection;
 
 import lombok.Data;
 import javax.persistence.Entity;

@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import fr.fms.entities.Cart;
 import fr.fms.entities.CartArticle;
 
 public interface CartArticleRepository extends JpaRepository<CartArticle, Long> {

@@ -3,7 +3,6 @@ package fr.fms.controller;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Scanner;
-import java.util.List;
 
 import org.springframework.data.domain.Page;
 
