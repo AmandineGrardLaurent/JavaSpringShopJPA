@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +21,7 @@ import fr.fms.entities.Category;
 
 public class ArticleServiceTest {
     public Article article;
+    public Category category;
 
     @Mock
     ArticleRepository articleRepository;
@@ -31,8 +34,9 @@ public class ArticleServiceTest {
         // Initiate mocks and inject them into the service
         MockitoAnnotations.openMocks(this);
 
-        Category category = new Category();
+        category = new Category();
         category.setName("Smartphone");
+        category.setId(1L);
 
         article = new Article(
                 10L,
@@ -62,6 +66,51 @@ public class ArticleServiceTest {
         assertEquals(200, result.get().getPrice());
         assertEquals("Smartphone", result.get().getCategory().getName());
         verify(articleRepository).findById(10L);
+    }
+
+    @Test
+    void should_find_articles_by_category_id() {
+        // Test to verify that the service can find articles by their category ID
+
+        System.out.println("Test: should_find_articles_by_category_id");
+
+        List<Article> articleList = new ArrayList<>();
+
+        Article article2 = new Article(
+                11L,
+                "Samsung",
+                "Galaxy S24",
+                300,
+                category);
+
+        articleList.add(article);
+        articleList.add(article2);
+
+        // GIVEN
+        when(articleRepository.findByCategoryId(category.getId()))
+                .thenReturn(articleList);
+
+        // WHEN
+        List<Article> result = articleService.getArticlesByCategoryId(category.getId());
+
+        // THEN
+        assertNotNull(result);
+        assertEquals(2, result.size());
+
+        Article articleOne = result.get(0);
+        Article articleTwo = result.get(1);
+
+        assertEquals("Iphone", articleOne.getBrand());
+        assertEquals("15", articleOne.getDescription());
+        assertEquals(200, articleOne.getPrice());
+        assertEquals("Smartphone", articleOne.getCategory().getName());
+
+        assertEquals("Samsung", articleTwo.getBrand());
+        assertEquals("Galaxy S24", articleTwo.getDescription());
+        assertEquals(300, articleTwo.getPrice());
+        assertEquals("Smartphone", articleTwo.getCategory().getName());
+
+        verify(articleRepository, times(1)).findByCategoryId(category.getId());
     }
 
     @Test
@@ -154,7 +203,7 @@ public class ArticleServiceTest {
         articleService.deleteArticleByPriceLessThan(articlePrice);
 
         // THEN
-        verify(articleRepository, times(1)).deleteByPriceLessThan(200);
+        verify(articleRepository, times(1)).deleteByPriceLessThan(articlePrice);
     }
 
 }
