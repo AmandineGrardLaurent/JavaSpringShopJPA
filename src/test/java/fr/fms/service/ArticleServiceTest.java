@@ -124,4 +124,20 @@ public class ArticleServiceTest {
         assertEquals(saved, result);
     }
 
+    @Test
+    void should_delete_article_by_id() {
+        // Test to verify that the service correctly deletes an article by its ID
+
+        System.out.println("Test: should_delete_article_by_id");
+
+        // GIVEN
+        Long articleId = 10L;
+
+        // WHEN
+        articleService.deleteArticle(articleId);
+
+        // THEN
+        verify(articleRepository, times(1)).deleteById(articleId);
+    }
+
 }
