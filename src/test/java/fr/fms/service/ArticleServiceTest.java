@@ -47,6 +47,11 @@ public class ArticleServiceTest {
     }
 
     @Test
+    void should_find_all_articles() {
+
+    }
+
+    @Test
     void should_find_article_by_id() {
         // Test to verify that the service can find an article by its ID
 
@@ -61,10 +66,12 @@ public class ArticleServiceTest {
 
         // THEN
         assertTrue(result.isPresent());
+
         assertEquals("Iphone", result.get().getBrand());
         assertEquals("15", result.get().getDescription());
         assertEquals(200, result.get().getPrice());
         assertEquals("Smartphone", result.get().getCategory().getName());
+
         verify(articleRepository).findById(10L);
     }
 
@@ -129,7 +136,37 @@ public class ArticleServiceTest {
 
         // THEN
         assertFalse(result.isPresent());
-        verify(articleRepository).findById(99L);
+        verify(articleRepository, times(1)).findById(99L);
+    }
+
+    @Test
+    void should_find_articles_by_brand_and_description() {
+        // Test to verify that the service can find an article by its brand and its
+        // description
+
+        System.out.println("Test: should_find_articles_by_brand_and_description");
+
+        List<Article> articleList = new ArrayList<>();
+        articleList.add(article);
+
+        // GIVEN
+        when(articleRepository.findByBrandContainingAndDescriptionContaining("Iph", "5")).thenReturn(articleList);
+
+        // WHEN
+        List<Article> result = articleService.getArticleByBrandContainingAndDescriptionContaining("Iph", "5");
+
+        Article articleOne = result.get(0);
+
+        // THEN
+        assertNotNull(result);
+        assertEquals(1, result.size());
+
+        assertEquals("Iphone", articleOne.getBrand());
+        assertEquals("15", articleOne.getDescription());
+        assertEquals(200, articleOne.getPrice());
+        assertEquals("Smartphone", articleOne.getCategory().getName());
+
+        verify(articleRepository, times(1)).findByBrandContainingAndDescriptionContaining("Iph", "5");
     }
 
     @Test
